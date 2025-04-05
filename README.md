@@ -8,7 +8,7 @@
 
 **GeneLens** is a Python package for functional analysis of differentially expressed genes (DEGs) and biomarker prediction, integrating:
 - Machine learning-based biomarker identification
-- Graph-based prediction of key regulatory genes via protein-protein interaction networks
+- Graph-based prediction of gene function via protein-protein interaction networks analysis
 
 Key applications:
 - Identification of biomarkers
@@ -18,20 +18,21 @@ Key applications:
 
 ### Core Modules
 
-1. **NetAnalyzer**
+1. **FSelector**
+   - Machine learning pipeline for biomarker discovery
+   - Features:
+     - Automatic Monte Carlo simulation of stable models
+     - Automated model training/tuning
+     - Feature importance analysis
+     - Customizable thresholds
+
+2. **NetAnalyzer**
    - Implements graph-based algorithm (Osmak et al. 2020, 2021)
    - Predicts genes functions via topological analysis of molecular networks
    - Features:
      - Automated network construction
-     - Centrality analysis
      - Pathway enrichment
-
-2. **FSelector**
-   - Machine learning pipeline for biomarker discovery
-   - Features:
-     - Automated model training/tuning
-     - Feature importance analysis
-     - Customizable thresholds
+     - Integration with Feature importance from FSelector
 
 ### Additional Capabilities
 - Standardized analysis pipelines
@@ -282,6 +283,9 @@ enrichment.get_dendro(reactome_df, FS_model.all_features)
 #### The color gradient from gray to red in the signatures reflects the increase in the weight of genes according to their calculated Score. The redder the signature, the higher the weight.
 
 
-```python
+### More information can be found in our publications:
 
-```
+1.	Pisklova, M., Osmak, G. (2024). Unveiling MiRNA-124 as a biomarker in hypertrophic cardiomyopathy: An innovative approach using machine learning and intelligent data analysis. International Journal of Cardiology, 410, 132220.
+2.	Osmak, G., Baulina, N., Kiselev, I., & Favorova, O. (2021). MiRNA-regulated pathways for hypertrophic cardiomyopathy: network-based approach to insight into pathogenesis. Genes, 12(12), 2016.
+3.	Osmak, G., Kiselev, I., Baulina, N., & Favorova, O. (2020). From miRNA target gene network to miRNA function: miR-375 might regulate apoptosis and actin dynamics in the heart muscle via Rho-GTPases-dependent pathways. International Journal of Molecular Sciences, 21(24), 9670.
+4. Osmak, G. J., Pisklova, M.V. (2025). Transcriptomics and the “Curse of Dimensionality”: Monte Carlo Simulations of ML-Models as a Tool for Analyzing Multidimensional Data in Tasks of Searching Markers of Biological Processes. Molecular Biology, 59, 143-149.

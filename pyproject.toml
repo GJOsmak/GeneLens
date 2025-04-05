@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Differential gene expression analysis via Monte-Carlo Machine Learning Inference and Network Analysis"
 authors = ["German <german.osmak@gmail.com>"]
 readme = "README.md"
+url = https://github.com/GJOsmak/GeneLens
 
 [tool.poetry.dependencies]
 python = "^3.10"
