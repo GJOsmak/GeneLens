@@ -170,7 +170,7 @@ MirNet = GeneralNet(interactome_path_db=None) # Load String db from path and cre
                                       # If path=None than built-in String version loaded.
 MirNet.get_LCC()                      # get the largest connected component from the network
 miRNA_targets = Targets(path_to_miRTarBase=None) #create dict from miRTarBase
-target_genes = miRNA_targets.get_targets('miR-375)
+target_genes = miRNA_targets.get_targets('miR-375')
 MirNet.select_nodes(target_genes)        # select the part of LCC containing only the miRNA target genes
 tis_gene_set = tissue_selector(ans=0, tissue_id=23) #In case of ans=None, tissue_id=None the choice will be offered interactively
 MirNet.select_nodes(tis_gene_set)     # select the part of LCC containing only the tissue target genes
