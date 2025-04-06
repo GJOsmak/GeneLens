@@ -47,8 +47,11 @@ class FeatureSelector(object):
                 The minimum proportion of models that a feature must be included in for it to be considered in further simulations
             max_feature : int, optional 
                 Can be restrict the feature space to n-top features. If "None", then the search is carried out over the entire feature space. 
-            optimal_method': str, ['first', 'median']
+            optimal_method: str, ['first', 'median']
                 How optimal cut-off level will be get. Default = 'first'.
+            feature_resample: int, optional (default=0)
+            Resampling of features. If 0, the full feature space is considered at each train_test_split, 
+            otherwise the feature space is also sampled in batches of size "feature_resample"
         pipeline_steps : list, optional
             Custom pipeline steps for the classifier. If None, uses:
             [StandardScaler(), LogisticRegression(penalty='l1', solver='liblinear')]
@@ -91,7 +94,8 @@ class FeatureSelector(object):
             'max_iter': 10,
             'cut_off_feature_value': 0.1,
             'max_feature': None, # Feature space can be restrict to n-top features. If "None", then the search is carried out over the entire feature space. 
-            'optimal_method': 'first' 
+            'optimal_method': 'first',
+            'feature_resample': 0
         }
         if cut_off_estim_params is not None:
             default_cut_off_params.update(cut_off_estim_params)
@@ -261,7 +265,7 @@ class FeatureSelector(object):
         self.all_features = dict(sorted(self.best_features.items(), key=lambda item: item[1], reverse=True))
         self.best_features = {k:v for k, v in self.all_features.items() if v > self.cut_off_frac_model}
 
-    def _get_optimal_cut_off_level(self, X=None, y=None, best_features=None, self_data=True, inner_loop=20, max_iter=10, cut_off_feature_value=0.1, max_feature=None, optimal_method='first'):
+    def _get_optimal_cut_off_level(self, X=None, y=None, best_features=None, self_data=True, inner_loop=20, max_iter=10, cut_off_feature_value=0.1, max_feature=None, optimal_method='first', feature_resample=0):
             
             _cut_of_list = list()
             _roc_train_list = list()
@@ -296,7 +300,7 @@ class FeatureSelector(object):
                     
                     for _ in range(inner_loop):
                         for _ in range(inner_loop):
-                            X_train, X_test, y_train, y_test = train_test_split_res(tmp_X, y)
+                            X_train, X_test, y_train, y_test = train_test_split_res(tmp_X, y, feature_resample=feature_resample)
                             if count_min_class(y_train) > 3: # so that the number of observations in the minimum class is greater than the number of splits in the CV
                                 if len(set(y_test)) > 1:
                                     break

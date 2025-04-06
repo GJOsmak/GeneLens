@@ -24,6 +24,10 @@ data/
 outputs/
 logs/
 results/
+paper
 
 # VSC
 DINA.code-workspace
+
+#игнорирование файлов
+Example.ipynb
