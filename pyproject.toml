@@ -4,7 +4,12 @@ version = "0.1.1"
 description = "Differential gene expression analysis via Monte-Carlo Machine Learning Inference and Network Analysis"
 authors = ["German <german.osmak@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/GJOsmak/GeneLens"
+repository = "https://github.com/GJOsmak/GeneLens"
+include = [
+    { path = "genelens/data/exampl_data/*", format = ["sdist", "wheel"] },
+    { path = "genelens/data/miRNET/addData/*", format = ["sdist", "wheel"] },
+    { path = "genelens/data/miRNET/baseData/*", format = ["sdist", "wheel"] }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -23,9 +28,6 @@ jupyter = "^1.1.1"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
-
-[tool.setuptools.package-data]
-my_package = ["data/**/*"]
 
 [build-system]
 requires = ["poetry-core"]
