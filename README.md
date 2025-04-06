@@ -261,13 +261,7 @@ plt.show()
 
 
 ```python
-enrich_res = enrichment.reactome_enrichment(list(GenGenNetwork.mst_subgraph.nodes()), species='Homo sapiens')
-enrich_res = enrichment.reac_pars(enrich_res)
-G_enrich = enrichment.get_net(enrich_res) #граф сигнальных путей
-
-reactome_df, raw_res = enrichment.dendro_reactome_to_pandas(enrich_res, G_enrich)
-
-enrichment.get_dendro(reactome_df, FS_model.all_features)
+enrichment.dendro_reactome_plot(list(GenGenNetwork.mst_subgraph.nodes()), FS_model.all_features, species='Homo sapiens')
 ```
 
 

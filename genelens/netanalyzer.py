@@ -1,3 +1,7 @@
+"""
+Predicts genes functions via topological analysis of molecular networks
+"""
+
 import networkx as nx  # version == 2.3
 import pandas as pd
 import requests  # HTTP Client for Python
@@ -9,14 +13,32 @@ import numpy as np
 from colour import Color
 from itertools import combinations
 from importlib.resources import files
-#   load interactome from String and convert to nx Graph
+import warnings
 
 
-#DATAPATH = files("genelens").joinpath("data/miRNET/")
-
-class MainNet:
-
+class GeneralNet:
+    """
+    Class for storing a gene-gene interaction graph
+    
+    Examples
+    --------
+    >>> MirNet = netanalyzer.GeneralNet(path) # Load String db from path and create gene-gene interaction network. 
+                                           # If path=None than built-in String version loaded.
+    >>> MirNet.get_LCC()                   # get the largest connected component from the network
+    >>> MirNet.select_nodes(miR_targets)   # select the part of LCC containing only the miRNA target genes
+    >>> MirNet.select_nodes(tis_gene_set)  # select the part of LCC containing only the tissue target genes
+    """
     def __init__(self, interactome=None):
+        """
+        param: interactome = str, path to Edge db in .csv format ['Source';'Target']
+        """
+        self.G = None
+        """the gene-gene Graph, as NetrworkX object"""
+        self.LCC = None
+        """the Largest Connected Component of gene-gene Graph, as NetrworkX object"""
+        self.mst_subgraph = None
+        """the minimal connected subgraph of specified nodes, as NetrworkX object"""
+
         if not isinstance(interactome, pd.DataFrame):
             string = pd.read_csv(files("genelens").joinpath("data/miRNET/baseData/String_interactome.csv"))
             self.G = nx.from_pandas_edgelist(string, 'Source', 'Target')
@@ -31,8 +53,10 @@ class MainNet:
         """
         return: sorted dict of node centrality
         """
-        centrality_node = nx.betweenness_centrality(self.get_LCC())
-        degree_centrality = nx.degree_centrality(self.get_LCC())
+        if not self.LCC:
+            self.get_LCC()
+        centrality_node = nx.betweenness_centrality(self.LCC)
+        degree_centrality = nx.degree_centrality(self.LCC)
         for k, v in centrality_node.items():
             centrality_node[k] = centrality_node[k] + degree_centrality[k]
         centrality_node = {k: v for k, v in sorted(centrality_node.items(), key=lambda item: item[1], reverse=True)}
@@ -49,25 +73,32 @@ class MainNet:
         CC_G = [self.G.subgraph(c).copy() for c in nx.connected_components(self.G)]
         self.LCC = max(CC_G, key=len)
         
-        #old version NetworkX
-        #CC_G = sorted(nx.connected_component_subgraphs(self.G), key=len, reverse=True)
-        #self.LCC = CC_G[0]
-
-
-        # print(len(CC_G), 'total connected components')
-        # print(len(CC_G[0].nodes), 'LCC cardinality')
-        
         print('LCC was extracted')
         print(f"Total connected components={len(CC_G)}, LCC cardinality={len(self.LCC)}")
 
-    def select_nodes(self, gene_set):
+    def select_nodes(self, gene_set, mst_LCC=False):
         """
-        param gene_set: tissue or another gene set
+        The function of selecting nodes for a graph and/or LCC. 
+        Leaves only the designated nodes in the corresponding objects
+
+        Parameters
+        ---------- 
+        gene_set : list of gene (or another nodes name)
+        mst_LCC : bool, default = False
+            If extracting a set of genes destroys a LCC, then a minimum spanning tree (mst) is extracted
         """
 
         self.G = self.G.subgraph(gene_set)
         if self.LCC:
-            self.LCC = self.LCC.subgraph(gene_set)
+            LCC = self.LCC.subgraph(gene_set)
+            if nx.is_connected(LCC):
+                self.LCC = LCC
+            elif mst_LCC:
+                self.minimum_connected_subgraph(gene_set)
+                self.LCC = self.mst_subgraph
+            else:
+                warnings.warn("\n[WARNING] After subgraph extraction, the LCC is no longer connected. ")
+                self.LCC = LCC
     
     def minimum_connected_subgraph(self, required_nodes):
         """
@@ -83,6 +114,8 @@ class MainNet:
         Prespecified nodes that must be included in the subgraph.
         Can be provided as either a list or set of node identifiers.
         """
+        if type(required_nodes) is set:
+            required_nodes = dict.fromkeys(required_nodes)
         req_top_gene_dict = required_nodes.copy()
         for gene in required_nodes.keys():
             if gene not in self.LCC.nodes():
@@ -113,7 +146,15 @@ class MainNet:
 
 
 def tissue_selector(ans=None, tissue_id=None):
-    
+    """
+    Function for tissue specific gene extraction
+
+    ans : int
+        0 - extraction from Human Protein Atlas
+        1 - extraction from GTEx
+    tissue_id: int
+        if None: Tissue ID (The choice will be offered interactively)
+    """
     if ans is None:
         ans = int(str(input('"Human Protein Atlas"(0) or "GTEx"(1) ? ')))
     if ans == 1:
@@ -171,18 +212,40 @@ def tissue_selector(ans=None, tissue_id=None):
 
 
 class KeyNodesExtractor:
+    """
+    Key node extractor by step-by-step removing nodes from the graph until the LCC is completely degraded
+    
+    Parameters
+    ----------
+    input : instance of GeneralNet class
+    
+    return : dict(nodes: weights)
+    
+    Examples
+    --------
+    >>> MirNet = netanalyzer.GeneralNet(path) # Load String db from path and create gene-gene interaction network. 
+                                           # If path=None than built-in String version loaded.
+    >>> MirNet.get_LCC()                   # get the largest connected component from the network
+    >>> extractor = KeyNodesExtractor()
+    >>> extractor(MirNet)
+    """
 
-    def __init__(self, MirNet):
+    def __call__(self, MirNet):
         self.key_nodes = dict()
-        self.net = MirNet.get_LCC()
-        self.node_centrality = MirNet.get_LCCnd_centrality()
-        self.graph_features = {'card_LCC': [len(self.net.nodes())],
-                               'n_CC': [len(list(nx.connected_component_subgraphs(self.net)))],
-                               'transitivity': [nx.transitivity(self.net)],
-                               'sh_path': [nx.average_shortest_path_length(self.net) / len(self.net.nodes())]}
+        """key nodes. Available after call KeyNodesExtractor"""
+        if not MirNet.LCC:
+            MirNet.get_LCC()
+        assert nx.is_connected(MirNet.LCC), "The graph must be connected before you can start extracting key nodes."
+        self._LCC = MirNet.LCC
+        self._node_centrality = MirNet.get_LCCnd_centrality()
+        self._graph_features = {'card_LCC': [len(self._LCC.nodes())],
+                               'n_CC': [len(list(nx.connected_components(self._LCC)))],
+                               'transitivity': [nx.transitivity(self._LCC)],
+                               'sh_path': [nx.average_shortest_path_length(self._LCC) / len(self._LCC.nodes())]}
+        return self._extraction()
 
     @staticmethod
-    def inflection_finder(card_LCC, n_CC, sigma):
+    def _inflection_finder(card_LCC, n_CC, sigma):
         """
         :param sigma: smoothing
         :param card_LCC: cardinality of the LCC
@@ -194,54 +257,69 @@ class KeyNodesExtractor:
         dy = np.diff(y)  # first derivative
         idx_max_dy = np.argmax(dy)
         if card_LCC[idx_max_dy] > n_CC[idx_max_dy]:
-            return KeyNodesExtractor.inflection_finder(card_LCC, n_CC, sigma + 0.2)
+            return KeyNodesExtractor._inflection_finder(card_LCC, n_CC, sigma + 0.2)
         else:
             return idx_max_dy
 
-    def extraction(self):
+    def _extraction(self):
 
-        for k, v in self.node_centrality.items():
+        for k, v in self._node_centrality.items():
 
             if v == 0:
                 break
-            self.net.remove_node(k)
-            if len(self.net.nodes()) == 0:
+            self._LCC.remove_node(k)
+            if len(self._LCC.nodes()) == 0:
                 break
-            LCC_curent = sorted(nx.connected_component_subgraphs(self.net), key=len, reverse=True)[0]   # get LCC
-            self.graph_features['card_LCC'].append(len(LCC_curent.nodes()))
-            self.graph_features['n_CC'].append(len(list(nx.connected_component_subgraphs(self.net))))
-            self.graph_features['transitivity'].append(nx.transitivity(LCC_curent))
-            self.graph_features['sh_path'].append(nx.average_shortest_path_length(LCC_curent) / len(LCC_curent.nodes()))
+            CC_G = [self._LCC.subgraph(c).copy() for c in nx.connected_components(self._LCC)]
+            LCC_curent = max(CC_G, key=len)
+            self._graph_features['card_LCC'].append(len(LCC_curent.nodes()))
+            self._graph_features['n_CC'].append(len(list(nx.connected_components(self._LCC))))
+            self._graph_features['transitivity'].append(nx.transitivity(LCC_curent))
+            self._graph_features['sh_path'].append(nx.average_shortest_path_length(LCC_curent) / len(LCC_curent.nodes()))
 
         # find inflection point of function
 
-        idx_max_dy = KeyNodesExtractor.inflection_finder(card_LCC=self.graph_features['card_LCC'],
-                                                         n_CC=self.graph_features['n_CC'],
+        idx_max_dy = KeyNodesExtractor._inflection_finder(card_LCC=self._graph_features['card_LCC'],
+                                                         n_CC=self._graph_features['n_CC'],
                                                          sigma=0.0001)
 
-        self.graph_features['cutoff_point'] = idx_max_dy
+        self._graph_features['cutoff_point'] = idx_max_dy
 
         for i in range(0, idx_max_dy + 1):
-            nods = list(self.node_centrality.keys())[i]
-            self.key_nodes[nods] = self.node_centrality[nods]
+            nods = list(self._node_centrality.keys())[i]
+            self.key_nodes[nods] = self._node_centrality[nods]
 
+        return self.key_nodes
+
+    def keys(self):
+        """Returns key nodes"""
         return self.key_nodes.keys()
-
 
 class Targets:
     """
     The class extracts and stores the targets of one microRNA and its name
     """
 
-    def __init__(self, path_to_miRTarBase):
+    def __init__(self, path_to_miRTarBase=None):
+        """
+        path_to_miRTarBase : str, optional
+            Path to miRTarBase.csv file. Format: [miRNA;target]
+            If path not specified, miRTarbase built-in version loaded.
+        """
+        self.miR_dict=None
+        """Dict{miRNA: [Targets]}"""
+
+        if not path_to_miRTarBase:
+            print('path_to_miRTarBase not specified. miRTarbase built-in version loaded')
+            path_to_miRTarBase = files("genelens").joinpath("data/miRNET/baseData/hsa_miRTarBase.csv")
         self.miR_dict = {}
         with open(path_to_miRTarBase) as interact:  # import targets from miRTarBase
             for line in interact:
                 (key, val) = line.strip().split(';')
                 if key in self.miR_dict:
-                    self.miR_dict[key] += [val]
+                    self.miR_dict[key].add(val)
                 else:
-                    self.miR_dict[key] = [val]
+                    self.miR_dict[key] = {val}
 
     def get_targets(self, miR_name):
         """
@@ -271,31 +349,27 @@ class Targets:
 
         return res
 
-#   visualisation tools
 
 class Plots:
+    """
+    NetAnalyzer visualisation tools
 
-    def __init__(self, MirNet, KeyNodesExtractor, miR_name):
+    Parameters
+    ----------
+    input : instances of GeneralNet and KeyNodesExtractor classes
+    """
+    def __init__(self, MirNet, KeyNodesExtractor):
         self.miR_G = MirNet.LCC
         self.key_nodes = KeyNodesExtractor.key_nodes
-        self.miR_name = miR_name
         self.centrality_node = MirNet.get_LCCnd_centrality()
-        self.card_LCC = KeyNodesExtractor.graph_features['card_LCC']
-        self.n_CC = KeyNodesExtractor.graph_features['n_CC']
-        self.idx_max_dy = KeyNodesExtractor.graph_features['cutoff_point']
+        self.card_LCC = KeyNodesExtractor._graph_features['card_LCC']
+        self.n_CC = KeyNodesExtractor._graph_features['n_CC']
+        self.idx_max_dy = KeyNodesExtractor._graph_features['cutoff_point']
 
-    def central_distr(self):
+    def central_distr(self, out_path='./'):
+        """visualisation hist of centrality distribution"""
         miR_G = self.miR_G
         key_nodes = self.key_nodes
-        mir_name = self.miR_name
-
-        """
-
-        :param miR_G: a Graph of miRNA
-        :param key_nodes: key_nodes from MainMiRNetwork.key_nodes
-        :param mir_name: miR name for saving file
-        :return: visualisation hist of centrality distribution
-        """
 
         fig = plt.figure()
         ax = fig.add_subplot()
@@ -327,7 +401,7 @@ class Plots:
 
         plt.tight_layout()
 
-        plt.savefig('./result/' + mir_name + '_centrality_distr.png', dpi=250)
+        plt.savefig(out_path + '_centrality_distr.png', dpi=250)
 
     def graph_to_cytoscape(self):
 
@@ -380,19 +454,10 @@ class Plots:
             BASE + 'apply/styles/' + 'miR_Net_Styles' + '/' + str(new_suid))  # !Это говно почему-то не работает
 
     def key_nodes_extractor(self):
-
+        """visualisation plot of key nodes selection"""
         card_LCC = self.card_LCC
         n_CC = self.n_CC
         idx_max_dy = self.idx_max_dy
-        mir_name = self.miR_name
-        """
-
-        :param card_LCC:
-        :param n_CC:
-        :param idx_max_dy:
-        :param mir_name:
-        :return: visualisation plot of key nodes selection
-        """
 
         fig = plt.figure()
         ax = fig.add_subplot()
@@ -425,4 +490,4 @@ class Plots:
         fig.set_figheight(8)
         plt.tight_layout()
 
-        plt.savefig('./result/' + mir_name + 'key_nodes_selection.png', dpi=300)
+        plt.savefig(out_path + 'key_nodes_selection.png', dpi=300)

@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>genelens.netanalyzer.MainNet</title>
+    <meta name="generator" content="pydoctor 24.11.2"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          genelens <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="genelens.netanalyzer.MainNet.html" class="internal-link" title="This class"><wbr></wbr>Main<wbr></wbr>Net</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="genelens.netanalyzer.MainNet.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_LCC" class="internal-link" title="genelens.netanalyzer.MainNet.get_LCC">get_<wbr></wbr>LCC</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_LCCnd_centrality" class="internal-link" title="genelens.netanalyzer.MainNet.get_LCCnd_centrality">get_<wbr></wbr>LCCnd_centrality</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#minimum_connected_subgraph" class="internal-link" title="genelens.netanalyzer.MainNet.minimum_connected_subgraph">minimum<wbr></wbr>_connected<wbr></wbr>_subgraph</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#select_nodes" class="internal-link" title="genelens.netanalyzer.MainNet.select_nodes">select<wbr></wbr>_nodes</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#G" class="internal-link" title="genelens.netanalyzer.MainNet.G">G</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#LCC" class="internal-link" title="genelens.netanalyzer.MainNet.LCC">LCC</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#mst_subgraph" class="internal-link" title="genelens.netanalyzer.MainNet.mst_subgraph">mst<wbr></wbr>_subgraph</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="genelens.netanalyzer.html" class="internal-link" title="The parent of this class">netanalyzer</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.KeyNodesExtractor.html" class="internal-link" title="genelens.netanalyzer.KeyNodesExtractor"><wbr></wbr>Key<wbr></wbr>Nodes<wbr></wbr>Extractor</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.MainNet.html" class="internal-link" title="genelens.netanalyzer.MainNet"><wbr></wbr>Main<wbr></wbr>Net</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.Plots.html" class="internal-link" title="genelens.netanalyzer.Plots"><wbr></wbr>Plots</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.Targets.html" class="internal-link" title="genelens.netanalyzer.Targets"><wbr></wbr>Targets</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.html#tissue_selector" class="internal-link" title="genelens.netanalyzer.tissue_selector">tissue<wbr></wbr>_selector</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">genelens</a></code><wbr></wbr>.<code><a href="genelens.netanalyzer.html" class="internal-link" title="genelens.netanalyzer">netanalyzer</a></code><wbr></wbr>.<code><a href="genelens.netanalyzer.MainNet.html" class="internal-link" title="genelens.netanalyzer.MainNet">MainNet</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">MainNet</span>:</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="genelens.netanalyzer.MainNet.__init__">MainNet(interactome)</a></code></p>
+          <p><a href="classIndex.html#genelens.netanalyzer.MainNet">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="pre">Class for storing a gene-gene interaction graph
+
+Examples
+--------
+&gt;&gt;&gt; MirNet = netanalyzer.MainNet(path) # Load String db from path and create gene-gene interaction network. 
+                                       # If path=None than built-in String version loaded.
+&gt;&gt;&gt; MirNet.get_LCC()                   # get the largest connected component from the network
+&gt;&gt;&gt; MirNet.select_nodes(miR_targets)   # select the part of LCC containing only the miRNA target genes
+&gt;&gt;&gt; MirNet.select_nodes(tis_gene_set)  # select the part of LCC containing only the tissue target genes</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id9">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__" class="internal-link" title="genelens.netanalyzer.MainNet.__init__">__init__</a></code></td>
+    <td>param: interactome = str, path to Edge db in .csv format ['Source';'Target']</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_LCC" class="internal-link" title="genelens.netanalyzer.MainNet.get_LCC">get_<wbr></wbr>LCC</a></code></td>
+    <td>return: the Largest Connected Component, as NetrworkX object</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#get_LCCnd_centrality" class="internal-link" title="genelens.netanalyzer.MainNet.get_LCCnd_centrality">get_<wbr></wbr>LCCnd_centrality</a></code></td>
+    <td>return: sorted dict of node centrality</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#minimum_connected_subgraph" class="internal-link" title="genelens.netanalyzer.MainNet.minimum_connected_subgraph">minimum<wbr></wbr>_connected<wbr></wbr>_subgraph</a></code></td>
+    <td>Finds the minimal connected subgraph containing the specified nodes.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#select_nodes" class="internal-link" title="genelens.netanalyzer.MainNet.select_nodes">select<wbr></wbr>_nodes</a></code></td>
+    <td>The function of selecting nodes for a graph and/or LCC. Leaves only the designated nodes in the corresponding objects</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#G" class="internal-link" title="genelens.netanalyzer.MainNet.G">G</a></code></td>
+    <td>the gene-gene Graph, as NetrworkX object</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#LCC" class="internal-link" title="genelens.netanalyzer.MainNet.LCC">LCC</a></code></td>
+    <td>the Largest Connected Component of gene-gene Graph, as NetrworkX object</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#mst_subgraph" class="internal-link" title="genelens.netanalyzer.MainNet.mst_subgraph">mst<wbr></wbr>_subgraph</a></code></td>
+    <td>the minimal connected subgraph of specified nodes, as NetrworkX object</td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, interactome=None)</span>:
+    
+    <a class="headerLink" href="#__init__" title="genelens.netanalyzer.MainNet.__init__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>param: interactome = str, path to Edge db in .csv format ['Source';'Target']</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.get_LCC">
+    
+  </a>
+  <a name="get_LCC">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_LCC</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#get_LCC" title="genelens.netanalyzer.MainNet.get_LCC">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>return: the Largest Connected Component, as NetrworkX object</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.get_LCCnd_centrality">
+    
+  </a>
+  <a name="get_LCCnd_centrality">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_LCCnd_centrality</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#get_LCCnd_centrality" title="genelens.netanalyzer.MainNet.get_LCCnd_centrality">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>return: sorted dict of node centrality</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.minimum_connected_subgraph">
+    
+  </a>
+  <a name="minimum_connected_subgraph">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">minimum_connected_subgraph</span><span class="function-signature">(self, required_nodes)</span>:
+    
+    <a class="headerLink" href="#minimum_connected_subgraph" title="genelens.netanalyzer.MainNet.minimum_connected_subgraph">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="pre">Finds the minimal connected subgraph containing the specified nodes.
+
+This implementation computes the smallest subgraph (by edge count) that:
+1. Contains all nodes from the input set
+2. Maintains connectivity between all included nodes
+
+Parameters
+----------
+required_nodes : Union[List, Set]
+Prespecified nodes that must be included in the subgraph.
+Can be provided as either a list or set of node identifiers.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.select_nodes">
+    
+  </a>
+  <a name="select_nodes">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">select_nodes</span><span class="function-signature">(self, gene_set)</span>:
+    
+    <a class="headerLink" href="#select_nodes" title="genelens.netanalyzer.MainNet.select_nodes">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>The function of selecting nodes for a graph and/or LCC. Leaves only the designated nodes in the corresponding objects</p>
+<p>param gene_set: list of gene (or another nodes name)</p>
+</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.G">
+    
+  </a>
+  <a name="G">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">G</span> =
+    
+    <a class="headerLink" href="#G" title="genelens.netanalyzer.MainNet.G">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>the gene-gene Graph, as NetrworkX object</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.LCC">
+    
+  </a>
+  <a name="LCC">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">LCC</span> =
+    
+    <a class="headerLink" href="#LCC" title="genelens.netanalyzer.MainNet.LCC">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>the Largest Connected Component of gene-gene Graph, as NetrworkX object</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.MainNet.mst_subgraph">
+    
+  </a>
+  <a name="mst_subgraph">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">mst_subgraph</span> =
+    
+    <a class="headerLink" href="#mst_subgraph" title="genelens.netanalyzer.MainNet.mst_subgraph">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>the minimal connected subgraph of specified nodes, as NetrworkX object</p></div>
+    
+  </div>
+</div>
+        </div>
+      
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">API Documentation</a> for genelens,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    24.11.2 at 2025-04-06 16:53:19.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>genelens.netanalyzer.Plots</title>
+    <meta name="generator" content="pydoctor 24.11.2"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+    
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          genelens <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="apidocs-help-button" title="Help" href="apidocs-help.html"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 10px;">
+          <p>For more information on the search, visit the <a href="apidocs-help.html#rst-search">help page</a>.</p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="genelens.netanalyzer.Plots.html" class="internal-link" title="This class"><wbr></wbr>Plots</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="genelens.netanalyzer.Plots.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#central_distr" class="internal-link" title="genelens.netanalyzer.Plots.central_distr">central<wbr></wbr>_distr</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#graph_to_cytoscape" class="internal-link" title="genelens.netanalyzer.Plots.graph_to_cytoscape">graph<wbr></wbr>_to<wbr></wbr>_cytoscape</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#key_nodes_extractor" class="internal-link" title="genelens.netanalyzer.Plots.key_nodes_extractor">key<wbr></wbr>_nodes<wbr></wbr>_extractor</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#card_LCC" class="internal-link" title="genelens.netanalyzer.Plots.card_LCC">card_<wbr></wbr>LCC</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#centrality_node" class="internal-link" title="genelens.netanalyzer.Plots.centrality_node">centrality<wbr></wbr>_node</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#idx_max_dy" class="internal-link" title="genelens.netanalyzer.Plots.idx_max_dy">idx<wbr></wbr>_max<wbr></wbr>_dy</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#key_nodes" class="internal-link" title="genelens.netanalyzer.Plots.key_nodes">key<wbr></wbr>_nodes</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#miR_G" class="internal-link" title="genelens.netanalyzer.Plots.miR_G">mi<wbr></wbr>R_<wbr></wbr>G</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#n_CC" class="internal-link" title="genelens.netanalyzer.Plots.n_CC">n_<wbr></wbr>CC</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="genelens.netanalyzer.html" class="internal-link" title="The parent of this class">netanalyzer</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.GeneralNet.html" class="internal-link" title="genelens.netanalyzer.GeneralNet"><wbr></wbr>General<wbr></wbr>Net</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.KeyNodesExtractor.html" class="internal-link" title="genelens.netanalyzer.KeyNodesExtractor"><wbr></wbr>Key<wbr></wbr>Nodes<wbr></wbr>Extractor</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.Plots.html" class="internal-link" title="genelens.netanalyzer.Plots"><wbr></wbr>Plots</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.Targets.html" class="internal-link" title="genelens.netanalyzer.Targets"><wbr></wbr>Targets</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="genelens.netanalyzer.html#tissue_selector" class="internal-link" title="genelens.netanalyzer.tissue_selector">tissue<wbr></wbr>_selector</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        
+         
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="index.html" class="internal-link">genelens</a></code><wbr></wbr>.<code><a href="genelens.netanalyzer.html" class="internal-link" title="genelens.netanalyzer">netanalyzer</a></code><wbr></wbr>.<code><a href="genelens.netanalyzer.Plots.html" class="internal-link" title="genelens.netanalyzer.Plots">Plots</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Plots</span>:</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="genelens.netanalyzer.Plots.__init__">Plots(MirNet, KeyNodesExtractor)</a></code></p>
+          <p><a href="classIndex.html#genelens.netanalyzer.Plots">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p class="pre">NetAnalyzer visualisation tools
+
+Parameters
+----------
+input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id12">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__" class="internal-link" title="genelens.netanalyzer.Plots.__init__">__init__</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#central_distr" class="internal-link" title="genelens.netanalyzer.Plots.central_distr">central<wbr></wbr>_distr</a></code></td>
+    <td>visualisation hist of centrality distribution</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#graph_to_cytoscape" class="internal-link" title="genelens.netanalyzer.Plots.graph_to_cytoscape">graph<wbr></wbr>_to<wbr></wbr>_cytoscape</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#key_nodes_extractor" class="internal-link" title="genelens.netanalyzer.Plots.key_nodes_extractor">key<wbr></wbr>_nodes<wbr></wbr>_extractor</a></code></td>
+    <td>visualisation plot of key nodes selection</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#card_LCC" class="internal-link" title="genelens.netanalyzer.Plots.card_LCC">card_<wbr></wbr>LCC</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#centrality_node" class="internal-link" title="genelens.netanalyzer.Plots.centrality_node">centrality<wbr></wbr>_node</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#idx_max_dy" class="internal-link" title="genelens.netanalyzer.Plots.idx_max_dy">idx<wbr></wbr>_max<wbr></wbr>_dy</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#key_nodes" class="internal-link" title="genelens.netanalyzer.Plots.key_nodes">key<wbr></wbr>_nodes</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#miR_G" class="internal-link" title="genelens.netanalyzer.Plots.miR_G">mi<wbr></wbr>R_<wbr></wbr>G</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#n_CC" class="internal-link" title="genelens.netanalyzer.Plots.n_CC">n_<wbr></wbr>CC</a></code></td>
+    <td><span class="undocumented">Undocumented</span></td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.Plots.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, MirNet, KeyNodesExtractor)</span>:
+    
+    <a class="headerLink" href="#__init__" title="genelens.netanalyzer.Plots.__init__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.Plots.central_distr">
+    
+  </a>
+  <a name="central_distr">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">central_distr</span><span class="function-signature">(self, out_path=<span class="rst-variable-quote">'</span><span class="rst-variable-string">./</span><span class="rst-variable-quote">'</span>)</span>:
+    
+    <a class="headerLink" href="#central_distr" title="genelens.netanalyzer.Plots.central_distr">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>visualisation hist of centrality distribution</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.Plots.graph_to_cytoscape">
+    
+  </a>
+  <a name="graph_to_cytoscape">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">graph_to_cytoscape</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#graph_to_cytoscape" title="genelens.netanalyzer.Plots.graph_to_cytoscape">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="genelens.netanalyzer.Plots.key_nodes_extractor">
+    
+  </a>
+  <a name="key_nodes_extractor">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">key_nodes_extractor</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#key_nodes_extractor" title="genelens.netanalyzer.Plots.key_nodes_extractor">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>visualisation plot of key nodes selection</p></div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.Plots.card_LCC">
+    
+  </a>
+  <a name="card_LCC">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">card_LCC</span> =
+    
+    <a class="headerLink" href="#card_LCC" title="genelens.netanalyzer.Plots.card_LCC">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.Plots.centrality_node">
+    
+  </a>
+  <a name="centrality_node">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">centrality_node</span> =
+    
+    <a class="headerLink" href="#centrality_node" title="genelens.netanalyzer.Plots.centrality_node">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.Plots.idx_max_dy">
+    
+  </a>
+  <a name="idx_max_dy">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">idx_max_dy</span> =
+    
+    <a class="headerLink" href="#idx_max_dy" title="genelens.netanalyzer.Plots.idx_max_dy">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.Plots.key_nodes">
+    
+  </a>
+  <a name="key_nodes">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">key_nodes</span> =
+    
+    <a class="headerLink" href="#key_nodes" title="genelens.netanalyzer.Plots.key_nodes">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.Plots.miR_G">
+    
+  </a>
+  <a name="miR_G">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">miR_G</span> =
+    
+    <a class="headerLink" href="#miR_G" title="genelens.netanalyzer.Plots.miR_G">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="genelens.netanalyzer.Plots.n_CC">
+    
+  </a>
+  <a name="n_CC">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">n_CC</span> =
+    
+    <a class="headerLink" href="#n_CC" title="genelens.netanalyzer.Plots.n_CC">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p class="undocumented">Undocumented</p></div>
+    
+  </div>
+</div>
+        </div>
+      
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container-fluid">
+    <a href="index.html">API Documentation</a> for genelens,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    24.11.2 at 2025-04-06 21:22:23.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

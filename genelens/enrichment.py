@@ -1,3 +1,9 @@
+"""
+Module for conducting analysis of overrepresentation of gene sets in all signal pathways of Reactome 
+with construction of dendrogram of intersection of overrepresented pathways taking 
+into account weight parameter
+"""
+
 from reactome2py import analysis
 import requests  # HTTP Client for Python
 import json  # Standard JSON library
@@ -13,7 +19,9 @@ from colour import Color
 import numpy as np
 from importlib.resources import files
 
-def reactome_enrichment(gene_set, species='Homo sapiens'):
+def _reactome_enrichment(gene_set, species='Homo sapiens'):
+    """the function receives data from Reactome via reactome2py.analysis"""
+
     target_set = ",".join(gene_set)
 
     result = analysis.identifiers(ids=target_set)
@@ -26,10 +34,8 @@ def reactome_enrichment(gene_set, species='Homo sapiens'):
     return token_result
 
 
-def reac_pars(token_result):
-
-    class ReactomeRes:
-        pass
+def _reac_pars(token_result):
+    """parsing reactome output"""
 
     ReactomeRes.token = token_result['summary']['token']
     ReactomeRes.max_p_value = 0
@@ -71,15 +77,15 @@ def reac_pars(token_result):
     return ReactomeRes
 
 
-def get_net(ReactomeRes):
-
+def _get_net(ReactomeRes):
+    """Graph of pathway construction"""
     reactome_linkege = pd.read_csv(files("genelens").joinpath("data/miRNET/baseData/ReactomePathwaysRelation.txt"), sep='\t', header=None)
     reactome_linkege.columns = ['Source', 'Target']
 
     G = nx.from_pandas_edgelist(reactome_linkege, source='Source', target='Target')
     G_enrich = G.subgraph(ReactomeRes.react_dict.keys())
 
-    # removing network components that contain less than two nodses
+    # removing network components that contain less than two nodes
 
     G_enrich = nx.Graph(G_enrich)
 
@@ -99,8 +105,15 @@ def get_net(ReactomeRes):
     return G_enrich
 
 
-def dendro_reactome_to_pandas(ReactomeRes, G, species='Homo sapiens'):
-
+def _dendro_reactome_to_pandas(ReactomeRes, G, species='Homo sapiens'):
+    """
+    Create DataFrame for dendrogram ploting
+    
+    Attributes:
+    -----
+    ReactomeRes : result of _reac_pars()
+    G : result of _get_net()
+    """
     url = 'https://reactome.org/AnalysisService/download/' + ReactomeRes.token + \
           '/pathways/TOTAL/result.csv'
     res = requests.get(url).content
@@ -113,63 +126,10 @@ def dendro_reactome_to_pandas(ReactomeRes, G, species='Homo sapiens'):
 
     return reactome_df, res
 
-"""
-def draw_net_to_cytoscape(G, ReactomeRes):
-
-    PORT_NUMBER = 1234
-    IP = 'localhost'
-    BASE = 'http://' + IP + ':' + str(PORT_NUMBER) + '/v1/'
-
-    # requests.delete(BASE + 'session')  # Delete all networks in current session
-
-    cytoscape_network = cy.from_networkx(G)
-    cytoscape_network['data']['name'] = 'First_Enrich_Net'
-    res1 = requests.post(BASE + 'networks', data=json.dumps(cytoscape_network))
-    res1_dict = res1.json()
-    new_suid = res1_dict['networkSUID']
-    requests.get(BASE + 'apply/layouts/force-directed/' + str(new_suid))
-
-    # load and apply style
-
-    res = requests.get(BASE + 'styles/PathwayEnrichStyles')
-    if res.status_code != 200:
-
-        with open('./options/cytoscape_styles/PathwayEnrichStyles.json') as json_file:
-            directed_styles = json.load(json_file)
-
-        for mapings in range(0, len(directed_styles['mappings'])):
-            if directed_styles['mappings'][mapings]['visualProperty'] == 'NODE_FILL_COLOR':
-                directed_styles['mappings'][mapings]['points'][0]['value'] = ReactomeRes.min_p_value
-                directed_styles['mappings'][mapings]['points'][2]['value'] = 0.05
-            if directed_styles['mappings'][mapings]['visualProperty'] == 'NODE_TRANSPARENCY':
-                directed_styles['mappings'][mapings]['points'][0]['value'] = ReactomeRes.min_found
-                directed_styles['mappings'][mapings]['points'][1]['value'] = ReactomeRes.max_found
-            if directed_styles['mappings'][mapings]['visualProperty'] == 'NODE_LABEL_TRANSPARENCY':
-                directed_styles['mappings'][mapings]['points'][0]['value'] = ReactomeRes.min_found
-                directed_styles['mappings'][mapings]['points'][1]['value'] = ReactomeRes.max_found
-            if directed_styles['mappings'][mapings]['visualProperty'] == 'NODE_BORDER_TRANSPARENCY':
-                directed_styles['mappings'][mapings]['points'][0]['value'] = ReactomeRes.min_found
-                directed_styles['mappings'][mapings]['points'][1]['value'] = ReactomeRes.max_found
-            if directed_styles['mappings'][mapings]['visualProperty'] == 'NODE_SIZE':
-                directed_styles['mappings'][mapings]['points'][0]['value'] = ReactomeRes.min_ratio
-                directed_styles['mappings'][mapings]['points'][1]['value'] = ReactomeRes.max_ratio
-
-        # Create new Visual Style
-        res = requests.post(BASE + "styles", data=json.dumps(directed_styles))
-        # new_style_name = res.json()['title']
-
-        # Apply it to current network
-
-    requests.get(
-        BASE + 'apply/styles/' + 'PathwayEnrichStyles' + '/' + str(new_suid))  # !Это говно почему-то не работает
-
-    return res
-"""
-
 # Dendrograms
 
 
-def create_similarity_matrix(gene_sets):
+def _create_similarity_matrix(gene_sets):
         """Create a similarity matrix for a given pathway-geneset dataset.
         :param dict gene_sets: pathway gene set dictionary
         :rtype: pandas.DataFrame
@@ -190,14 +150,14 @@ def create_similarity_matrix(gene_sets):
         return similarity_dataframe
 
 
-def get_dendro(dt, key_nodes_dict, fig_preff_name=''):
+def _get_dendro(dt, key_nodes_dict, out_path='./'):
 
     gene_set_dict = {dt.iloc[row]['Pathway identifier']: set(dt.iloc[row]['Submitted entities found'].split(';')) for
                      row in range(0, dt.shape[0])}
     dtid2name = {dt.iloc[row]['Pathway identifier']: set(dt.iloc[row]['Pathway name'].split(';')) for row in
                  range(0, dt.shape[0])}
 
-    similarity_matrix = create_similarity_matrix(gene_set_dict)
+    similarity_matrix = _create_similarity_matrix(gene_set_dict)
     if similarity_matrix.empty:
         print('similarity_matrix is empty. No intersections found. Dendrogram could not be constructed.')
         return dt
@@ -262,4 +222,23 @@ def get_dendro(dt, key_nodes_dict, fig_preff_name=''):
         local_label = (lbl.get_text().split(': ('))[0]
         lbl.set_color(label_to_BC_sort[local_label])
 
-    plt.savefig("./results/" + fig_preff_name + "scipy_dendrogram.png", dpi=300)
+    plt.savefig(out_path + "enrichment_dendrogram.png", dpi=300)
+
+def dendro_reactome_plot(gene_set, gene_weights, species='Homo sapiens', out_path='./'):
+    """
+    The function performs an overrepresentation analysis and draws a dendrogram of signaling pathways 
+    taking into account the weight of the genes included in them.
+
+    Attributes:
+    -----
+    gene_set : list of genes
+    gene_weights : dict {gene:weights}
+    species : str, species in Reactome
+    out_path : str, where the plot will be saved
+
+    """
+    enrich_res = _reactome_enrichment(gene_set, species=species)
+    enrich_res = _reac_pars(enrich_res)
+    G_enrich = _get_net(enrich_res) #граф сигнальных путей
+    reactome_df, raw_res = _dendro_reactome_to_pandas(enrich_res, G_enrich)
+    _get_dendro(gene_set=reactome_df, gene_weights=gene_weights, out_path=out_path)
