@@ -83,84 +83,9 @@ FS_model = FeatureSelector(X, y,
                            cut_off_estim_params={'max_feature': 50}) # This parameter implements early stopping. Bigger feature space -> more precision, more processor time
 ```
 
-    The regularization coefficient was not specified, the search for the optimal C was started
-
-
-    processing: 100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [02:20<00:00, 14.07s/it]
-
-
-    Optimal regularization coefficient (С) =  0.053
-    
-    Prefit model for cutoff weight level estimation
-
-
-    fit model: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 3000/3000 [12:38<00:00,  3.95it/s]
-
-
-    Prefit done
-    Serching cutoff level for feature weights... 0 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:51,  3.59it/s]
-
-
-    1 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:51,  3.60it/s]
-
-
-    2 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:51,  3.59it/s]
-
-
-    3 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:51,  3.59it/s]
-
-
-    4 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:51,  3.61it/s]
-
-
-    5 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:52,  3.57it/s]
-
-
-    6 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:51,  3.60it/s]
-
-
-    7 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:52,  3.57it/s]
-
-
-    8 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:51,  3.61it/s]
-
-
-    9 
-
-    feature space analysis:  13%|██████████████████▌                                                                                                                               | 27/213 [00:07<00:52,  3.56it/s]
-
-    optimal cut of weight level =  0.72
-
-
-    
-
-
-
 ```python
 FS_model.fit(max_iter=2700, log=True, feature_resample=0) #more max_iter -> more precision, more processor time
 ```
-
-    fit model: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 2700/2700 [11:20<00:00,  3.97it/s]
-
-
 
 ```python
 fsplots = fsplot(FS_model)
@@ -168,33 +93,20 @@ fsplots.plot_all(fontsize=25, labels=['a.', 'b.', 'c.', 'd.', 'e.', 'f.'],
                 left=0.1, right=0.9, top=0.9, bottom=0.1, hspace=0.5, wspace=0.5)
 plt.show()
 ```
-
-
     
 ![png](images/output_4_0.png)
     
 
-
-
 ```python
 print(get_feature_space([FS_model], cut_off_level=0.75))
 ```
-
     {'MYH6', 'RASD1'}
-
-
 
 ```python
 FS_model.best_features
 ```
-
-
-
-
     {'RASD1': np.float64(0.9510623822037754),
      'MYH6': np.float64(0.8420449794132905)}
-
-
 
 ## Network Enrichment Analysis
 
