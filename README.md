@@ -112,7 +112,7 @@ FS_model.best_features
 
 
 ```python
-GenGenNetwork = netanalyzer.MainNet() #Load String db and create gene-gene interaction network
+GenGenNetwork = netanalyzer.GeneralNet() #Load String db and create gene-gene interaction network
 GenGenNetwork.get_LCC() #get the largest connected component from the network
 ```
 
