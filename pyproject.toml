@@ -5,6 +5,7 @@ description = "Differential gene expression analysis via Monte-Carlo Machine Lea
 authors = ["German <german.osmak@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/GJOsmak/GeneLens"
+documentation = "https://gjosmak.github.io/GeneLens/"
 include = [
     { path = "genelens/data/exampl_data/*", format = ["sdist", "wheel"] },
     { path = "genelens/data/miRNET/addData/*", format = ["sdist", "wheel"] },

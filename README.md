@@ -45,7 +45,7 @@ Key applications:
 pip install genelens
 ```
 
-## Example of use
+## Example of use FeatureSelector
 
 ```python
 from genelens.fselector import FeatureSelector, get_feature_space, fsplot
@@ -61,16 +61,9 @@ from importlib.resources import files
 ```python
 # data load
 data = pd.read_csv(files("genelens").joinpath("data/exampl_data/train_test.csv"), index_col=0)
-
 X = data.drop('index', axis=1)
 y = list(map(int, data['index'] == 'HCM'))
-
-print(X.shape)
 ```
-
-    (145, 14830)
-
-
 
 ```python
 # FeatureSelector initialization
@@ -98,30 +91,18 @@ plt.show()
     
 
 ```python
-print(get_feature_space([FS_model], cut_off_level=0.75))
-```
-    {'MYH6', 'RASD1'}
-
-```python
 FS_model.best_features
+
+# return:    
+# {'RASD1': np.float64(0.9510623822037754),
+#  'MYH6': np.float64(0.8420449794132905)}
 ```
-    {'RASD1': np.float64(0.9510623822037754),
-     'MYH6': np.float64(0.8420449794132905)}
 
 ## Network Enrichment Analysis
-
 
 ```python
 GenGenNetwork = netanalyzer.GeneralNet() #Load String db and create gene-gene interaction network
 GenGenNetwork.get_LCC() #get the largest connected component from the network
-```
-
-    LCC was extracted
-    Total connected components=146, LCC cardinality=9844
-
-
-
-```python
 GenGenNetwork.minimum_connected_subgraph(FS_model.best_features)
 ```
 
@@ -132,7 +113,7 @@ GenGenNetwork.minimum_connected_subgraph(FS_model.best_features)
     Initial core feature=1, mst-graph cardinality=0
 
 
-#### Two of the three selected genes are missing from the version of the String database we are using. Therefore, it is not possible to construct an mst-graph. To continue the analysis, we will select the top 10 genes sorted by their Score
+#### If Two of the three selected genes are missing from the version of the String database we are using, it is not possible to construct an mst-graph. To continue the analysis, we will select the top 10 genes sorted by their Score
 
 
 ```python
@@ -160,8 +141,6 @@ nx.draw(
     node_size=2000,         
     font_size=15            
 )
-
-# Показываем граф
 plt.show()
 ```
 
@@ -176,11 +155,6 @@ plt.show()
 enrichment.dendro_reactome_plot(list(GenGenNetwork.mst_subgraph.nodes()), FS_model.all_features, species='Homo sapiens')
 ```
 
-
-    <Figure size 2400x2400 with 0 Axes>
-
-
-
     
 ![png](images/output_13_1.png)
     
@@ -188,6 +162,21 @@ enrichment.dendro_reactome_plot(list(GenGenNetwork.mst_subgraph.nodes()), FS_mod
 
 #### The color gradient from gray to red in the signatures reflects the increase in the weight of genes according to their calculated Score. The redder the signature, the higher the weight.
 
+## Example of use NetAnalyzer
+
+```python
+from genelens.netanalyzer import GeneralNet, Targets, KeyNodesExtractor
+MirNet = GeneralNet(interactome_path_db=None) # Load String db from path and create gene-gene interaction network.
+                                      # If path=None than built-in String version loaded.
+MirNet.get_LCC()                      # get the largest connected component from the network
+miRNA_targets = Targets(path_to_miRTarBase=None) #create dict from miRTarBase
+target_genes = miRNA_targets.get_targets('miR-375)
+MirNet.select_nodes(target_genes)        # select the part of LCC containing only the miRNA target genes
+tis_gene_set = tissue_selector(ans=0, tissue_id=23) #In case of ans=None, tissue_id=None the choice will be offered interactively
+MirNet.select_nodes(tis_gene_set)     # select the part of LCC containing only the tissue target genes
+extractor = KeyNodesExtractor()
+extractor(MirNet) 
+```
 
 ### More information can be found in our publications:
 

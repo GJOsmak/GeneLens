@@ -28,7 +28,7 @@ class GeneralNet:
     >>> MirNet.select_nodes(miR_targets)   # select the part of LCC containing only the miRNA target genes
     >>> MirNet.select_nodes(tis_gene_set)  # select the part of LCC containing only the tissue target genes
     """
-    def __init__(self, interactome=None):
+    def __init__(self, interactome_path_db=None):
         """
         param: interactome = str, path to Edge db in .csv format ['Source';'Target']
         """
@@ -39,11 +39,11 @@ class GeneralNet:
         self.mst_subgraph = None
         """the minimal connected subgraph of specified nodes, as NetrworkX object"""
 
-        if not isinstance(interactome, pd.DataFrame):
+        if not interactome_path_db:
             string = pd.read_csv(files("genelens").joinpath("data/miRNET/baseData/String_interactome.csv"))
             self.G = nx.from_pandas_edgelist(string, 'Source', 'Target')
         else:
-            interactome = pd.DataFrame(interactome)
+            interactome = pd.read_csv(interactome_path_db, sep=;)
             assert interactome.shape[1] == 2, 'It takes two columns: "Source" and "Target"'
             assert sum(interactome.columns == ['Source', 'Target']) == 2, 'Columns names are not "Source" and "Target"'
             self.G = nx.from_pandas_edgelist(interactome, 'Source', 'Target')
