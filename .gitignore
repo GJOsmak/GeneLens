@@ -30,5 +30,5 @@ paper
 # VSC
 DINA.code-workspace
 
-#игнорирование файлов
-Example.ipynb
+#игнорирование файлов юпитер ноутбука
+*.ipynb

@@ -28,7 +28,7 @@ class GeneralNet:
     >>> MirNet.select_nodes(miR_targets)   # select the part of LCC containing only the miRNA target genes
     >>> MirNet.select_nodes(tis_gene_set)  # select the part of LCC containing only the tissue target genes
     """
-    def __init__(self, interactome_path_db=None):
+    def __init__(self, interactome_path_db=None, verbose=True):
         """
         param: interactome = str, path to Edge db in .csv format ['Source';'Target']
         """
@@ -47,7 +47,8 @@ class GeneralNet:
             assert interactome.shape[1] == 2, 'It takes two columns: "Source" and "Target"'
             assert sum(interactome.columns == ['Source', 'Target']) == 2, 'Columns names are not "Source" and "Target"'
             self.G = nx.from_pandas_edgelist(interactome, 'Source', 'Target')
-            print('interactome contain ', interactome.shape[0], ' rows')
+            if verbose:
+                print('interactome contain ', interactome.shape[0], ' rows')
 
     def get_LCCnd_centrality(self):
         """
@@ -66,15 +67,15 @@ class GeneralNet:
 
         return centrality_node
 
-    def get_LCC(self):
+    def get_LCC(self, verbose=True):
         """
         return: the Largest Connected Component, as NetrworkX object
         """
         CC_G = [self.G.subgraph(c).copy() for c in nx.connected_components(self.G)]
         self.LCC = max(CC_G, key=len)
-        
-        print('LCC was extracted')
-        print(f"Total connected components={len(CC_G)}, LCC cardinality={len(self.LCC)}")
+        if verbose:
+            print('LCC was extracted')
+            print(f"Total connected components={len(CC_G)}, LCC cardinality={len(self.LCC)}")
 
     def select_nodes(self, gene_set, mst_LCC=False):
         """
@@ -93,14 +94,19 @@ class GeneralNet:
             LCC = self.LCC.subgraph(gene_set)
             if nx.is_connected(LCC):
                 self.LCC = LCC
+                return self.LCC
             elif mst_LCC:
                 self.minimum_connected_subgraph(gene_set)
                 self.LCC = self.mst_subgraph
+                return self.LCC
             else:
                 warnings.warn("\n[WARNING] After subgraph extraction, the LCC is no longer connected. ")
                 self.LCC = LCC
+                return self.LCC
+        else:
+            return self.G
     
-    def minimum_connected_subgraph(self, required_nodes):
+    def minimum_connected_subgraph(self, required_nodes, verbose=True):
         """
         Finds the minimal connected subgraph containing the specified nodes.
         
@@ -120,7 +126,8 @@ class GeneralNet:
         for gene in required_nodes.keys():
             if gene not in self.LCC.nodes():
                 req_top_gene_dict.pop(gene)
-                print(f'{gene} absent from LCC, excluded from further analysis')
+                if verbose:
+                    print(f'{gene} absent from LCC, excluded from further analysis')
 
         # Create an auxiliary graph between the given vertices
         auxiliary_graph = nx.Graph()
@@ -140,9 +147,10 @@ class GeneralNet:
 
         self.mst_subgraph = self.LCC.edge_subgraph(subgraph_edges).copy()
         
-        print()
-        print('mst-graph was extracted')
-        print(f"Initial core feature={len(req_top_gene_dict.keys())}, mst-graph cardinality={len(self.mst_subgraph)}")
+        if verbose:
+            print()
+            print('mst-graph was extracted')
+            print(f"Initial core feature={len(req_top_gene_dict.keys())}, mst-graph cardinality={len(self.mst_subgraph)}")
 
 
 def tissue_selector(ans=None, tissue_id=None):
@@ -245,7 +253,7 @@ class KeyNodesExtractor:
         return self._extraction()
 
     @staticmethod
-    def _inflection_finder(card_LCC, n_CC, sigma):
+    def _inflection_finder(card_LCC, n_CC, sigma, max_iter=100):
         """
         :param sigma: smoothing
         :param card_LCC: cardinality of the LCC
@@ -256,8 +264,10 @@ class KeyNodesExtractor:
         y = gaussian_filter1d(card_LCC, sigma=sigma)
         dy = np.diff(y)  # first derivative
         idx_max_dy = np.argmax(dy)
+        if max_iter == 0:
+            return None
         if card_LCC[idx_max_dy] > n_CC[idx_max_dy]:
-            return KeyNodesExtractor._inflection_finder(card_LCC, n_CC, sigma + 0.2)
+            return KeyNodesExtractor._inflection_finder(card_LCC, n_CC, sigma + 0.2, max_iter - 1)
         else:
             return idx_max_dy
 
@@ -278,12 +288,15 @@ class KeyNodesExtractor:
             self._graph_features['sh_path'].append(nx.average_shortest_path_length(LCC_curent) / len(LCC_curent.nodes()))
 
         # find inflection point of function
-
         idx_max_dy = KeyNodesExtractor._inflection_finder(card_LCC=self._graph_features['card_LCC'],
                                                          n_CC=self._graph_features['n_CC'],
                                                          sigma=0.0001)
-
-        self._graph_features['cutoff_point'] = idx_max_dy
+        if idx_max_dy:
+            self._graph_features['cutoff_point'] = idx_max_dy
+        else:
+            idx_max_dy = np.where(np.array(self._graph_features['n_CC']) - np.array(self._graph_features['card_LCC']) > 2)[0][0]
+            warnings.warn(f"\n[WARNING] maximum iterations inflection_finder reached. The inflection point is chosen as np.where(n_CC-card_LCC > 0)")
+            self._graph_features['cutoff_point'] = idx_max_dy
 
         for i in range(0, idx_max_dy + 1):
             nods = list(self._node_centrality.keys())[i]
@@ -321,7 +334,7 @@ class Targets:
                 else:
                     self.miR_dict[key] = {val}
 
-    def get_targets(self, miR_name):
+    def get_targets(self, miR_name, verbose=True):
         """
         miRTarBase contains different forms of miRNA, for example, miR-21- can correspond to
         miR-21-3p and miR-21-5p. The function concatenates targets of all forms of miRNA and removes duplicates,
@@ -344,8 +357,9 @@ class Targets:
             print('miRNA', '"{}"'.format(miR_name), 'not found, use another name')
             return 1
 
-        print('I found a miRNA with name:', *mir_name_app)
-        print('and ', len(res), 'unique targets')
+        if verbose:
+            print('I found a miRNA with name:', *mir_name_app)
+            print('and ', len(res), 'unique targets')
 
         return res
 
