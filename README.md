@@ -87,7 +87,7 @@ fsplots.plot_all(fontsize=25, labels=['a.', 'b.', 'c.', 'd.', 'e.', 'f.'],
 plt.show()
 ```
     
-![png](images/output_4_0.png)
+![png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_4_0.png)
     
 
 ```python
@@ -146,7 +146,7 @@ plt.show()
 
 
     
-![png](images/output_12_0.png)
+![png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_12_0.png)
     
 
 
@@ -156,7 +156,7 @@ enrichment.dendro_reactome_plot(list(GenGenNetwork.mst_subgraph.nodes()), FS_mod
 ```
 
     
-![png](images/output_13_1.png)
+![png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_13_1.png)
     
 
 
