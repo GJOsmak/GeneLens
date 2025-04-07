@@ -357,19 +357,31 @@ class Plots:
     Parameters
     ----------
     input : instances of GeneralNet and KeyNodesExtractor classes
+
+    Examples
+    --------
+    >>> MirNet = netanalyzer.GeneralNet(path)               
+    >>> MirNet.get_LCC()                   
+    >>> extractor = KeyNodesExtractor()
+    >>> extractor(MirNet)
+    >>> net_plot = netanalyzer.Plots(MirNet, extractor)
+    >>> net_plot.central_distr(out_path='./')
+    >>> net_plot.key_nodes_extractor(out_path='./')
+    >>> net_plot.graph_to_cytoscape()
     """
+    
     def __init__(self, MirNet, KeyNodesExtractor):
-        self.miR_G = MirNet.LCC
-        self.key_nodes = KeyNodesExtractor.key_nodes
-        self.centrality_node = MirNet.get_LCCnd_centrality()
-        self.card_LCC = KeyNodesExtractor._graph_features['card_LCC']
-        self.n_CC = KeyNodesExtractor._graph_features['n_CC']
-        self.idx_max_dy = KeyNodesExtractor._graph_features['cutoff_point']
+        self._miR_G = MirNet.LCC
+        self._key_nodes = KeyNodesExtractor.key_nodes
+        self._centrality_node = MirNet.get_LCCnd_centrality()
+        self._card_LCC = KeyNodesExtractor._graph_features['card_LCC']
+        self._n_CC = KeyNodesExtractor._graph_features['n_CC']
+        self._idx_max_dy = KeyNodesExtractor._graph_features['cutoff_point']
 
     def central_distr(self, out_path='./'):
         """visualisation hist of centrality distribution"""
-        miR_G = self.miR_G
-        key_nodes = self.key_nodes
+        miR_G = self._miR_G
+        key_nodes = self._key_nodes
 
         fig = plt.figure()
         ax = fig.add_subplot()
@@ -404,9 +416,10 @@ class Plots:
         plt.savefig(out_path + '_centrality_distr.png', dpi=250)
 
     def graph_to_cytoscape(self):
+        """Network visualization via Cytoscape (must be installed)"""
 
-        miR_G = nx.Graph(self.miR_G)  # unfreezing of the graph
-        centrality_node = self.centrality_node
+        miR_G = nx.Graph(self._miR_G)  # unfreezing of the graph
+        centrality_node = self._centrality_node
         rem_CC = 0
 
         for CC in list(nx.connected_components(miR_G)):
@@ -453,11 +466,11 @@ class Plots:
         requests.get(
             BASE + 'apply/styles/' + 'miR_Net_Styles' + '/' + str(new_suid))  # !Это говно почему-то не работает
 
-    def key_nodes_extractor(self):
+    def key_nodes_extractor(self, out_path='./'):
         """visualisation plot of key nodes selection"""
-        card_LCC = self.card_LCC
-        n_CC = self.n_CC
-        idx_max_dy = self.idx_max_dy
+        card_LCC = self._card_LCC
+        n_CC = self._n_CC
+        idx_max_dy = self._idx_max_dy
 
         fig = plt.figure()
         ax = fig.add_subplot()

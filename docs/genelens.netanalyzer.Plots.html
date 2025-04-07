@@ -174,63 +174,63 @@
         <div class="childrenKindTitle">Attributes</div>
         <ul>
     
-    <li class="">
+    <li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="#card_LCC" class="internal-link" title="genelens.netanalyzer.Plots.card_LCC">card_<wbr></wbr>LCC</a></code>
+            <div class="itemName"><code><a href="#_card_LCC" class="internal-link" title="genelens.netanalyzer.Plots._card_LCC">_card_<wbr></wbr>LCC</a></code>
             </div>
         
 
-    </li><li class="">
+    </li><li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="#centrality_node" class="internal-link" title="genelens.netanalyzer.Plots.centrality_node">centrality<wbr></wbr>_node</a></code>
+            <div class="itemName"><code><a href="#_centrality_node" class="internal-link" title="genelens.netanalyzer.Plots._centrality_node">_centrality<wbr></wbr>_node</a></code>
             </div>
         
 
-    </li><li class="">
+    </li><li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="#idx_max_dy" class="internal-link" title="genelens.netanalyzer.Plots.idx_max_dy">idx<wbr></wbr>_max<wbr></wbr>_dy</a></code>
+            <div class="itemName"><code><a href="#_idx_max_dy" class="internal-link" title="genelens.netanalyzer.Plots._idx_max_dy">_idx<wbr></wbr>_max<wbr></wbr>_dy</a></code>
             </div>
         
 
-    </li><li class="">
+    </li><li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="#key_nodes" class="internal-link" title="genelens.netanalyzer.Plots.key_nodes">key<wbr></wbr>_nodes</a></code>
+            <div class="itemName"><code><a href="#_key_nodes" class="internal-link" title="genelens.netanalyzer.Plots._key_nodes">_key<wbr></wbr>_nodes</a></code>
             </div>
         
 
-    </li><li class="">
+    </li><li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="#miR_G" class="internal-link" title="genelens.netanalyzer.Plots.miR_G">mi<wbr></wbr>R_<wbr></wbr>G</a></code>
+            <div class="itemName"><code><a href="#_miR_G" class="internal-link" title="genelens.netanalyzer.Plots._miR_G">_mi<wbr></wbr>R_<wbr></wbr>G</a></code>
             </div>
         
 
-    </li><li class="">
+    </li><li class="private">
         
         
         
 
         
-            <div class="itemName"><code><a href="#n_CC" class="internal-link" title="genelens.netanalyzer.Plots.n_CC">n_<wbr></wbr>CC</a></code>
+            <div class="itemName"><code><a href="#_n_CC" class="internal-link" title="genelens.netanalyzer.Plots._n_CC">_n_<wbr></wbr>CC</a></code>
             </div>
         
 
@@ -364,7 +364,18 @@
 
 Parameters
 ----------
-input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
+input : instances of GeneralNet and KeyNodesExtractor classes
+
+Examples
+--------
+&gt;&gt;&gt; MirNet = netanalyzer.GeneralNet(path)               
+&gt;&gt;&gt; MirNet.get_LCC()                   
+&gt;&gt;&gt; extractor = KeyNodesExtractor()
+&gt;&gt;&gt; extractor(MirNet)
+&gt;&gt;&gt; net_plot = netanalyzer.Plots(MirNet, extractor)
+&gt;&gt;&gt; net_plot.central_distr(out_path='./')
+&gt;&gt;&gt; net_plot.key_nodes_extractor(out_path='./')
+&gt;&gt;&gt; net_plot.graph_to_cytoscape()</p></div>
         </div>
 
         <div id="splitTables">
@@ -385,41 +396,41 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
     
     <td>Method</td>
     <td><code><a href="#graph_to_cytoscape" class="internal-link" title="genelens.netanalyzer.Plots.graph_to_cytoscape">graph<wbr></wbr>_to<wbr></wbr>_cytoscape</a></code></td>
-    <td><span class="undocumented">Undocumented</span></td>
+    <td>Network visualization via Cytoscape (must be installed)</td>
   </tr><tr class="method">
     
     <td>Method</td>
     <td><code><a href="#key_nodes_extractor" class="internal-link" title="genelens.netanalyzer.Plots.key_nodes_extractor">key<wbr></wbr>_nodes<wbr></wbr>_extractor</a></code></td>
     <td>visualisation plot of key nodes selection</td>
-  </tr><tr class="instancevariable">
+  </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#card_LCC" class="internal-link" title="genelens.netanalyzer.Plots.card_LCC">card_<wbr></wbr>LCC</a></code></td>
+    <td><code><a href="#_card_LCC" class="internal-link" title="genelens.netanalyzer.Plots._card_LCC">_card_<wbr></wbr>LCC</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
+  </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#centrality_node" class="internal-link" title="genelens.netanalyzer.Plots.centrality_node">centrality<wbr></wbr>_node</a></code></td>
+    <td><code><a href="#_centrality_node" class="internal-link" title="genelens.netanalyzer.Plots._centrality_node">_centrality<wbr></wbr>_node</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
+  </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#idx_max_dy" class="internal-link" title="genelens.netanalyzer.Plots.idx_max_dy">idx<wbr></wbr>_max<wbr></wbr>_dy</a></code></td>
+    <td><code><a href="#_idx_max_dy" class="internal-link" title="genelens.netanalyzer.Plots._idx_max_dy">_idx<wbr></wbr>_max<wbr></wbr>_dy</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
+  </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#key_nodes" class="internal-link" title="genelens.netanalyzer.Plots.key_nodes">key<wbr></wbr>_nodes</a></code></td>
+    <td><code><a href="#_key_nodes" class="internal-link" title="genelens.netanalyzer.Plots._key_nodes">_key<wbr></wbr>_nodes</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
+  </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#miR_G" class="internal-link" title="genelens.netanalyzer.Plots.miR_G">mi<wbr></wbr>R_<wbr></wbr>G</a></code></td>
+    <td><code><a href="#_miR_G" class="internal-link" title="genelens.netanalyzer.Plots._miR_G">_mi<wbr></wbr>R_<wbr></wbr>G</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
-  </tr><tr class="instancevariable">
+  </tr><tr class="instancevariable private">
     
     <td>Instance Variable</td>
-    <td><code><a href="#n_CC" class="internal-link" title="genelens.netanalyzer.Plots.n_CC">n_<wbr></wbr>CC</a></code></td>
+    <td><code><a href="#_n_CC" class="internal-link" title="genelens.netanalyzer.Plots._n_CC">_n_<wbr></wbr>CC</a></code></td>
     <td><span class="undocumented">Undocumented</span></td>
   </tr>
 </table>
@@ -499,7 +510,7 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
   </div>
   <div class="docstring functionBody">
     
-    <div><p class="undocumented">Undocumented</p></div>
+    <div><p>Network visualization via Cytoscape (must be installed)</p></div>
   </div>
 </div><div class="basemethod">
   
@@ -513,7 +524,7 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">key_nodes_extractor</span><span class="function-signature">(self)</span>:
+    <span class="py-keyword">def</span> <span class="py-defname">key_nodes_extractor</span><span class="function-signature">(self, out_path=<span class="rst-variable-quote">'</span><span class="rst-variable-string">./</span><span class="rst-variable-quote">'</span>)</span>:
     
     <a class="headerLink" href="#key_nodes_extractor" title="genelens.netanalyzer.Plots.key_nodes_extractor">
       
@@ -525,20 +536,20 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
     
     <div><p>visualisation plot of key nodes selection</p></div>
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
   
-  <a name="genelens.netanalyzer.Plots.card_LCC">
+  <a name="genelens.netanalyzer.Plots._card_LCC">
     
   </a>
-  <a name="card_LCC">
+  <a name="_card_LCC">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">card_LCC</span> =
+    <span class="py-defname">_card_LCC</span> =
     
-    <a class="headerLink" href="#card_LCC" title="genelens.netanalyzer.Plots.card_LCC">
+    <a class="headerLink" href="#_card_LCC" title="genelens.netanalyzer.Plots._card_LCC">
       
       
       ¶
@@ -549,20 +560,20 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
   
-  <a name="genelens.netanalyzer.Plots.centrality_node">
+  <a name="genelens.netanalyzer.Plots._centrality_node">
     
   </a>
-  <a name="centrality_node">
+  <a name="_centrality_node">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">centrality_node</span> =
+    <span class="py-defname">_centrality_node</span> =
     
-    <a class="headerLink" href="#centrality_node" title="genelens.netanalyzer.Plots.centrality_node">
+    <a class="headerLink" href="#_centrality_node" title="genelens.netanalyzer.Plots._centrality_node">
       
       
       ¶
@@ -573,20 +584,20 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
   
-  <a name="genelens.netanalyzer.Plots.idx_max_dy">
+  <a name="genelens.netanalyzer.Plots._idx_max_dy">
     
   </a>
-  <a name="idx_max_dy">
+  <a name="_idx_max_dy">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">idx_max_dy</span> =
+    <span class="py-defname">_idx_max_dy</span> =
     
-    <a class="headerLink" href="#idx_max_dy" title="genelens.netanalyzer.Plots.idx_max_dy">
+    <a class="headerLink" href="#_idx_max_dy" title="genelens.netanalyzer.Plots._idx_max_dy">
       
       
       ¶
@@ -597,20 +608,20 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
   
-  <a name="genelens.netanalyzer.Plots.key_nodes">
+  <a name="genelens.netanalyzer.Plots._key_nodes">
     
   </a>
-  <a name="key_nodes">
+  <a name="_key_nodes">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">key_nodes</span> =
+    <span class="py-defname">_key_nodes</span> =
     
-    <a class="headerLink" href="#key_nodes" title="genelens.netanalyzer.Plots.key_nodes">
+    <a class="headerLink" href="#_key_nodes" title="genelens.netanalyzer.Plots._key_nodes">
       
       
       ¶
@@ -621,20 +632,20 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
   
-  <a name="genelens.netanalyzer.Plots.miR_G">
+  <a name="genelens.netanalyzer.Plots._miR_G">
     
   </a>
-  <a name="miR_G">
+  <a name="_miR_G">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">miR_G</span> =
+    <span class="py-defname">_miR_G</span> =
     
-    <a class="headerLink" href="#miR_G" title="genelens.netanalyzer.Plots.miR_G">
+    <a class="headerLink" href="#_miR_G" title="genelens.netanalyzer.Plots._miR_G">
       
       
       ¶
@@ -645,20 +656,20 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
     <div><p class="undocumented">Undocumented</p></div>
     
   </div>
-</div><div class="baseinstancevariable">
+</div><div class="baseinstancevariable private">
   
   
-  <a name="genelens.netanalyzer.Plots.n_CC">
+  <a name="genelens.netanalyzer.Plots._n_CC">
     
   </a>
-  <a name="n_CC">
+  <a name="_n_CC">
     
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">n_CC</span> =
+    <span class="py-defname">_n_CC</span> =
     
-    <a class="headerLink" href="#n_CC" title="genelens.netanalyzer.Plots.n_CC">
+    <a class="headerLink" href="#_n_CC" title="genelens.netanalyzer.Plots._n_CC">
       
       
       ¶
@@ -681,7 +692,7 @@ input : instances of GeneralNet and KeyNodesExtractor classes</p></div>
   <div class="container-fluid">
     <a href="index.html">API Documentation</a> for genelens,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    24.11.2 at 2025-04-06 23:19:16.
+    24.11.2 at 2025-04-07 13:19:41.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

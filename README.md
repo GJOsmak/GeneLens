@@ -1,4 +1,4 @@
-# GeneLens: Integrated DEG Analysis & Biomarker Prediction
+# GeneLens: Intelligent DEG Analysis & Biomarker Prediction
 
 ![Python Version](https://img.shields.io/badge/python-3.10%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -87,7 +87,8 @@ fsplots.plot_all(fontsize=25, labels=['a.', 'b.', 'c.', 'd.', 'e.', 'f.'],
 plt.show()
 ```
     
-![png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_4_0.png)
+Output example:
+![https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_4_0.png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_4_0.png)
     
 
 ```python
@@ -104,29 +105,29 @@ FS_model.best_features
 GenGenNetwork = netanalyzer.GeneralNet() #Load String db and create gene-gene interaction network
 GenGenNetwork.get_LCC() #get the largest connected component from the network
 GenGenNetwork.minimum_connected_subgraph(FS_model.best_features)
+
+# output:
+# RASD1 absent from LCC, excluded from further analysis
+# CDC42EP4 absent from LCC, excluded from further analysis
+#
+# mst-graph was extracted
+# Initial core feature=1, mst-graph cardinality=0
 ```
-
-    RASD1 absent from LCC, excluded from further analysis
-    CDC42EP4 absent from LCC, excluded from further analysis
-    
-    mst-graph was extracted
-    Initial core feature=1, mst-graph cardinality=0
-
 
 #### If Two of the three selected genes are missing from the version of the String database we are using, it is not possible to construct an mst-graph. To continue the analysis, we will select the top 10 genes sorted by their Score
 
 
 ```python
 GenGenNetwork.minimum_connected_subgraph(dict(list(FS_model.all_features.items())[:10]))
+
+# output: 
+# RASD1 absent from LCC, excluded from further analysis
+# CDC42EP4 absent from LCC, excluded from further analysis
+# ZFP36 absent from LCC, excluded from further analysis
+#
+# mst-graph was extracted
+# Initial core feature=7, mst-graph cardinality=17
 ```
-
-    RASD1 absent from LCC, excluded from further analysis
-    CDC42EP4 absent from LCC, excluded from further analysis
-    ZFP36 absent from LCC, excluded from further analysis
-    
-    mst-graph was extracted
-    Initial core feature=7, mst-graph cardinality=17
-
 
 
 ```python
@@ -145,8 +146,8 @@ plt.show()
 ```
 
 
-    
-![png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_12_0.png)
+Output example:
+![https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_12_0.png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_12_0.png)
     
 
 
@@ -155,8 +156,8 @@ plt.show()
 enrichment.dendro_reactome_plot(list(GenGenNetwork.mst_subgraph.nodes()), FS_model.all_features, species='Homo sapiens')
 ```
 
-    
-![png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_13_1.png)
+Output example:  
+![https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_13_1.png](https://github.com/GJOsmak/GeneLens/blob/f8b452aa50831742cf5dcc4819f02c58d71376ad/images/output_13_1.png)
     
 
 
