@@ -43,7 +43,7 @@ class GeneralNet:
             string = pd.read_csv(files("genelens").joinpath("data/miRNET/baseData/String_interactome.csv"))
             self.G = nx.from_pandas_edgelist(string, 'Source', 'Target')
         else:
-            interactome = pd.read_csv(interactome_path_db, sep=;)
+            interactome = pd.read_csv(interactome_path_db, sep=';')
             assert interactome.shape[1] == 2, 'It takes two columns: "Source" and "Target"'
             assert sum(interactome.columns == ['Source', 'Target']) == 2, 'Columns names are not "Source" and "Target"'
             self.G = nx.from_pandas_edgelist(interactome, 'Source', 'Target')
