@@ -175,10 +175,25 @@ target_genes = miRNA_targets.get_targets('miR-375')
 MirNet.select_nodes(target_genes)        # select the part of LCC containing only the miRNA target genes
 tis_gene_set = tissue_selector(ans=0, tissue_id=23) #In case of ans=None, tissue_id=None the choice will be offered interactively
 MirNet.select_nodes(tis_gene_set)     # select the part of LCC containing only the tissue target genes
+MirNet.get_LCC()
 extractor = KeyNodesExtractor()
-extractor(MirNet) 
+extractor(MirNet)
 ```
+#### We can also make a miRNA key genes extraction function (Pipeline):
+```python
+from genelens.netanalyzer import GeneralNet, Targets, KeyNodesExtractor
 
+miRTargets = Targets()
+def miRNAkey_extractor_pipeline(miRNA):
+    GNet = GeneralNet(verbose=False)
+    Extractor = KeyNodesExtractor()
+    GNet.select_nodes(miRTargets.get_targets(miRNA, verbose=False))
+    GNet.get_LCC(verbose=False)
+    if len(GNet.LCC) > 0:
+        return Extractor(GNet)
+    else:
+        return dict()
+```
 ### More information can be found in our publications:
 
 1.	Pisklova, M., Osmak, G. (2024). Unveiling MiRNA-124 as a biomarker in hypertrophic cardiomyopathy: An innovative approach using machine learning and intelligent data analysis. International Journal of Cardiology, 410, 132220.

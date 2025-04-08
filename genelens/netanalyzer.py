@@ -72,10 +72,15 @@ class GeneralNet:
         return: the Largest Connected Component, as NetrworkX object
         """
         CC_G = [self.G.subgraph(c).copy() for c in nx.connected_components(self.G)]
-        self.LCC = max(CC_G, key=len)
-        if verbose:
-            print('LCC was extracted')
-            print(f"Total connected components={len(CC_G)}, LCC cardinality={len(self.LCC)}")
+        try:
+            self.LCC = max(CC_G, key=len)  # Выбираем наибольший связный компонент
+            if verbose:
+                print('LCC was extracted')
+                print(f"Total connected components={len(CC_G)}, LCC cardinality={len(self.LCC)}")
+        except ValueError:
+            self.LCC = nx.Graph()
+            if verbose:
+                print("Warning: Graph is empty or has no connected components!")
 
     def select_nodes(self, gene_set, mst_LCC=False):
         """
@@ -243,6 +248,7 @@ class KeyNodesExtractor:
         """key nodes. Available after call KeyNodesExtractor"""
         if not MirNet.LCC:
             MirNet.get_LCC()
+        assert len(MirNet.LCC) > 0, "Graph is empty (null graph). Cannot extracting key nodes."
         assert nx.is_connected(MirNet.LCC), "The graph must be connected before you can start extracting key nodes."
         self._LCC = MirNet.LCC
         self._node_centrality = MirNet.get_LCCnd_centrality()
@@ -250,6 +256,8 @@ class KeyNodesExtractor:
                                'n_CC': [len(list(nx.connected_components(self._LCC)))],
                                'transitivity': [nx.transitivity(self._LCC)],
                                'sh_path': [nx.average_shortest_path_length(self._LCC) / len(self._LCC.nodes())]}
+        if self._graph_features['card_LCC'][0] < 3:
+            return self._node_centrality
         return self._extraction()
 
     @staticmethod
@@ -286,8 +294,6 @@ class KeyNodesExtractor:
             self._graph_features['n_CC'].append(len(list(nx.connected_components(self._LCC))))
             self._graph_features['transitivity'].append(nx.transitivity(LCC_curent))
             self._graph_features['sh_path'].append(nx.average_shortest_path_length(LCC_curent) / len(LCC_curent.nodes()))
-        if self._graph_features['card_LCC'][0] < 3:
-            return self._node_centrality
 
         # find inflection point of function
         idx_max_dy = KeyNodesExtractor._inflection_finder(card_LCC=self._graph_features['card_LCC'],
@@ -295,11 +301,16 @@ class KeyNodesExtractor:
                                                          sigma=0.0001)
         if idx_max_dy:
             self._graph_features['cutoff_point'] = idx_max_dy
-        else:
-            idx_max_dy = np.where(np.array(self._graph_features['n_CC']) - np.array(self._graph_features['card_LCC']) > 2)[0][0]
+        else: # KeyNodesExtractor return None
+            index = 2
+            while index >= -3:
+                try:
+                    idx_max_dy = np.where(np.array(self._graph_features['n_CC']) - np.array(self._graph_features['card_LCC']) > index)[0][0]
+                    break
+                except IndexError:
+                    index -= 1
             warnings.warn(f"\n[WARNING] maximum iterations inflection_finder reached. The inflection point is chosen as np.where(n_CC-card_LCC > 0)")
             self._graph_features['cutoff_point'] = idx_max_dy
-
         for i in range(0, idx_max_dy + 1):
             nods = list(self._node_centrality.keys())[i]
             self.key_nodes[nods] = self._node_centrality[nods]
