@@ -254,6 +254,7 @@ class KeyNodesExtractor:
 
     @staticmethod
     def _inflection_finder(card_LCC, n_CC, sigma, max_iter=100):
+        print(card_LCC, n_CC)
         """
         :param sigma: smoothing
         :param card_LCC: cardinality of the LCC
@@ -286,6 +287,8 @@ class KeyNodesExtractor:
             self._graph_features['n_CC'].append(len(list(nx.connected_components(self._LCC))))
             self._graph_features['transitivity'].append(nx.transitivity(LCC_curent))
             self._graph_features['sh_path'].append(nx.average_shortest_path_length(LCC_curent) / len(LCC_curent.nodes()))
+        if self._graph_features['card_LCC'][0] < 3:
+            return self._node_centrality
 
         # find inflection point of function
         idx_max_dy = KeyNodesExtractor._inflection_finder(card_LCC=self._graph_features['card_LCC'],
