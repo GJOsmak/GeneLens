@@ -254,7 +254,6 @@ class KeyNodesExtractor:
 
     @staticmethod
     def _inflection_finder(card_LCC, n_CC, sigma, max_iter=100):
-        print(card_LCC, n_CC)
         """
         :param sigma: smoothing
         :param card_LCC: cardinality of the LCC
