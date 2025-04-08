@@ -158,7 +158,7 @@ class GeneralNet:
             print(f"Initial core feature={len(req_top_gene_dict.keys())}, mst-graph cardinality={len(self.mst_subgraph)}")
 
 
-def tissue_selector(ans=None, tissue_id=None):
+def tissue_selector(ans=None, tissue_id=None, verbose=True):
     """
     Function for tissue specific gene extraction
 
@@ -174,8 +174,8 @@ def tissue_selector(ans=None, tissue_id=None):
         dt = pd.read_csv(
             files("genelens").joinpath("data/miRNET/addData/GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_median_tpm.gct"),
             sep='\t')  # loading med(TPM) from GTEx
-
-        print('Gene universe is...')
+        if verbose:
+            print('Gene universe is...')
 
         labels = sorted(dt.columns)
         index = [i for i in range(0, len(dt.columns))]
@@ -186,12 +186,14 @@ def tissue_selector(ans=None, tissue_id=None):
             print("give me int, or input 'all'", sep='\n')
             tissue_id = str(input('Your choice: '))
         else:
-            print(labels[int(tissue_id)], 'was used', sep=' ')
+            if verbose:
+                print(labels[int(tissue_id)], 'was used', sep=' ')
 
         if tissue_id != 'all':
             tissue = labels[int(tissue_id)]
             tissue_genes = set(dt['Description'][dt[tissue] > 0])
-            print('your tissue is ', tissue, ' number of genes: ', len(tissue_genes))
+            if verbose:
+                print('your tissue is ', tissue, ' number of genes: ', len(tissue_genes))
 
             return tissue_genes
         else:
