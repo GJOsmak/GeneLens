@@ -166,7 +166,7 @@ Output example:
 ## Example of use NetAnalyzer
 
 ```python
-from genelens.netanalyzer import GeneralNet, Targets, KeyNodesExtractor
+from genelens.netanalyzer import GeneralNet, Targets, KeyNodesExtractor, tissue_selector
 MirNet = GeneralNet(interactome_path_db=None) # Load String db from path and create gene-gene interaction network.
                                       # If path=None than built-in String version loaded.
 MirNet.get_LCC()                      # get the largest connected component from the network
