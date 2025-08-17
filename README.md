@@ -189,7 +189,7 @@ from genelens.enrichment import dendro_reactome_plot
 net_plot = Plots(MirNet, extractor)
 net_plot.central_distr(out_path='./')
 net_plot.key_nodes_extractor(out_path='./')
-net_plot.graph_to_cytoscape()
+net_plot.graph_to_cytoscape() # ATTENTION! Desktop Cytoscape app must be running
 dendro_reactome_plot(extractor(MirNet).keys(), extractor(MirNet), species='Homo sapiens', out_path='./')
 ```
 
