@@ -179,6 +179,20 @@ MirNet.get_LCC()
 extractor = KeyNodesExtractor()
 extractor(MirNet)
 ```
+
+## Plots NetAnalyzer
+
+```python
+from genelens.netanalyzer import Plots
+from genelens.enrichment import dendro_reactome_plot
+
+net_plot = Plots(MirNet, extractor)
+net_plot.central_distr(out_path='./')
+net_plot.key_nodes_extractor(out_path='./')
+net_plot.graph_to_cytoscape()
+dendro_reactome_plot(extractor(MirNet).keys(), extractor(MirNet), species='Homo sapiens', out_path='./')
+```
+
 #### We can also make a miRNA key genes extraction function (Pipeline):
 ```python
 from genelens.netanalyzer import GeneralNet, Targets, KeyNodesExtractor
