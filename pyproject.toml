@@ -9,7 +9,8 @@ documentation = "https://gjosmak.github.io/GeneLens/"
 include = [
     { path = "genelens/data/exampl_data/*", format = ["sdist", "wheel"] },
     { path = "genelens/data/miRNET/addData/*", format = ["sdist", "wheel"] },
-    { path = "genelens/data/miRNET/baseData/*", format = ["sdist", "wheel"] }
+    { path = "genelens/data/miRNET/baseData/*", format = ["sdist", "wheel"] },
+    { path = "genelens/options/*", format = ["sdist", "wheel"] }
 ]
 
 [tool.poetry.dependencies]

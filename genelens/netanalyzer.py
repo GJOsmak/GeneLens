@@ -15,6 +15,21 @@ from itertools import combinations
 from importlib.resources import files
 import warnings
 
+def check_cytoscape_connection(base_url, timeout=2):
+    """
+    Checks if Cytoscape is accessible via the REST API.
+    """
+    try:
+        response = requests.get(base_url + 'version', timeout=timeout)
+        if response.status_code == 200:
+            return True, response.json().get('cytoscapeVersion', 'unknown')
+    except requests.ConnectionError:
+        pass
+    except requests.Timeout:
+        pass
+    except Exception:
+        pass
+    return False, None
 
 class GeneralNet:
     """
@@ -462,6 +477,18 @@ class Plots:
         IP = 'localhost'
         BASE = 'http://' + IP + ':' + str(PORT_NUMBER) + '/v1/'
 
+        # check connection
+        connected, version = check_cytoscape_connection(BASE)
+
+        if not connected:
+            raise ConnectionError(
+                "FAILED to connect to Cytoscape App. "
+                "Please make sure that:\n"
+                "1. Cytoscape is running.\n"
+                "2. REST API is enabled (in Cytoscape: File → Import → Network → Public Networks, or any other REST-based action).\n"
+                "3. Port 1234 is not occupied (default port is 1234).\n"
+                "4. You can test the connection in your browser: http://localhost:1234/v1/version"
+            )
         requests.delete(BASE + 'session')  # Delete all networks in current session
 
         # py2cytoscape Legacy adaptor
@@ -488,7 +515,9 @@ class Plots:
         res = requests.get(BASE + 'styles/miR_Net_Styles')
         if res.status_code != 200:
 
-            with open('./options/cytoscape_styles/miR_Net_Styles.json') as json_file:
+            styles_path = files("genelens.options.cytoscape_styles") / "miR_Net_Styles.json"
+
+            with open(styles_path) as json_file:
                 miR_Net_Styles = json.load(json_file)
 
             for mapings in range(0, len(miR_Net_Styles['mappings'])):
