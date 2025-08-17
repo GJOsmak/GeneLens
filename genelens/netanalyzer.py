@@ -464,6 +464,18 @@ class Plots:
 
         requests.delete(BASE + 'session')  # Delete all networks in current session
 
+        # py2cytoscape Legacy adaptor
+        class LegacyGraphWrapper:
+            def __init__(self, g):
+                self.graph = g.graph
+                self.node = g.nodes  # <-- 
+                self.nodes = g.nodes
+                self.edges = g.edges
+                self.graph = g.graph
+
+        wrapped_G = LegacyGraphWrapper(miR_G)
+        cytoscape_network = cy.from_networkx(wrapped_G)
+
         cytoscape_network = cy.from_networkx(miR_G)
         cytoscape_network['data']['name'] = 'miR_Net'
         res1 = requests.post(BASE + 'networks', data=json.dumps(cytoscape_network))
